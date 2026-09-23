@@ -6,6 +6,7 @@
   "type": "commonjs",
   "scripts": {
     "train": "nodemon src/train.js",
+    "trainx": "nodemon src/train.ts",
     "start": "ts-node src/server.ts",
     "start:dev": "nodemon --exec ts-node src/server.ts",
     "build": "tsc",
