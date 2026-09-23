@@ -19,3 +19,23 @@ function taskL(str) {
 }
 
 console.log(taskL("Men bugundan Burak loyihasini boshladim"));
+
+/*
+TASK M
+
+Array ichidagi har bir raqam uchun raqamning o'zi va uning kvadratidan tashkil topgan object hosil qilib qaytarsin.
+
+Masalan: getSquareNumbers([1, 2, 3]) return [{number: 1, square: 1}, ...] */
+
+// let arr [4,2,1,6,];
+
+function taskM(arr) {
+  return arr.map((num) => {
+    return {
+      raqam: num,
+      kvadrat: num ** 2,
+    };
+  });
+}
+
+console.log(taskM([2, 5, 6, 8, 9]));
