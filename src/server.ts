@@ -1,7 +1,5 @@
-// console.log("EXECUTED");
-//
-// import moment from "moment";
-// const currentDate = moment().format("YYYY-MM-DD");
-// console.log("currentDate", currentDate);
-// const person: string = "John Doe";
-// const count: number = 100;
+import dotenv from 'dotenv';
+dotenv.config();
+
+console.log("PORT: " + process.env.PORT);
+console.log("MONGO URL " + process.env.MONGO_URL);
