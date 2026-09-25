@@ -1,17 +1,34 @@
-function getSquareNumbers(arr: number[]) {
-    let result = [];
+function palindromCheck(str: string): boolean {
+    let reversed = "";
 
-    for (let i = 0; i < arr.length; i++) {
-        result.push({
-            number: arr[i],
-            kvadrat: arr[i] * arr[i]
-        });
+    for (let i = str.length - 1; i >= 0; i--) {  // bu str oxiridan bitt bittalab reversed ichiga qoyib boradi
+        reversed += str[i];
     }
 
-    return result;
+    return str === reversed;
 }
 
-console.log(getSquareNumbers([55, 43, 21]));
+console.log(palindromCheck("aziza"));
+console.log(palindromCheck("ethan"));
+
+
+
+
+
+// function getSquareNumbers(arr: number[]) {
+//     let result = [];
+//
+//     for (let i = 0; i < arr.length; i++) {
+//         result.push({
+//             number: arr[i],
+//             kvadrat: arr[i] * arr[i]
+//         });
+//     }
+//
+//     return result;
+// }
+//
+// console.log(getSquareNumbers([55, 43, 21]));
 
 
 
