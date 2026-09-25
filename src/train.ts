@@ -30,7 +30,7 @@ Array ichidagi har bir raqam uchun raqamning o'zi va uning kvadratidan tashkil t
 Masalan: getSquareNumbers([1, 2, 3]) return [{number: 1, square: 1}, ...] */
 
 // let arr [4,2,1,6,];
-
+/*
 function taskM(arr) {
   return arr.map((num) => {
     return {
@@ -40,4 +40,18 @@ function taskM(arr) {
   });
 }
 
-console.log(taskM([2, 5, 6, 8, 9]));
+console.log(taskM([2, 5, 6, 8, 9]));  */
+
+/* 
+TASK N
+
+Stringni palindrom ekanligini aniqlab true yoki false qaytarsin.
+
+Masalan: palindromCheck("dad") return true */
+
+function taskN_palind(task: string) {
+  return task === task.split("").reverse().join(""); // return qilyatganda birinchi holatidagi task ga === dan keyingi holati teng bolsa true beradi
+}
+
+console.log(taskN_palind("dad")); // true
+console.log(taskN_palind("hello")); // false
