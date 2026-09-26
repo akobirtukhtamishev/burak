@@ -1,3 +1,14 @@
+/* Project Standards:
+- Logging standards
+- Naming standards:
+     function, method, variable = CAMEL
+     class => PASCAL
+     folder => KEBAB
+     CSS => SNAKE
+- Error handling
+
+*/
+
 // Architectural pattern: MVC, Dependency Injection, MVP
 
 // Design pattern: Middleware, Decotar
