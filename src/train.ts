@@ -58,9 +58,28 @@ Stringni palindrom ekanligini aniqlab true yoki false qaytarsin.
 
 Masalan: palindromCheck("dad") return true */
 
+/*
 function taskN_palind(task: string) {
   return task === task.split("").reverse().join(""); // return qilyatganda birinchi holatidagi task ga === dan keyingi holati teng bolsa true beradi
 }
 
 console.log(taskN_palind("dad")); // true
-console.log(taskN_palind("hello")); // false
+console.log(taskN_palind("hello")); // false  */
+
+/*
+TASK O
+
+Array ichidagi har xil qiymatlardan faqat sonlar yig'indisini hisoblab qaytarsin.
+
+Masalan: calculateSumOfNumbers([10, "10", {son: 10}, true, 35]) return 45. */
+
+function taskO(arr: any) {
+  let num = 0;
+  for (let i = 0; i < arr.length; i++)
+    if (typeof arr[i] === "number") {
+      num += arr[i];
+    }
+  return num;
+}
+
+console.log(taskO([2, true, "salom", 5, { salom: "Steve" }, 70, 52, 1]));
