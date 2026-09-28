@@ -72,6 +72,7 @@ TASK O
 Array ichidagi har xil qiymatlardan faqat sonlar yig'indisini hisoblab qaytarsin.
 
 Masalan: calculateSumOfNumbers([10, "10", {son: 10}, true, 35]) return 45. */
+/*
 
 function taskO(arr: any) {
   let num = 0;
@@ -82,4 +83,23 @@ function taskO(arr: any) {
   return num;
 }
 
-console.log(taskO([2, true, "salom", 5, { salom: "Steve" }, 70, 52, 1]));
+console.log(taskO([2, true, "salom", 5, { salom: "Steve" }, 70, 52, 1])); */
+
+/* 
+TASK P
+
+Objectni nested array sifatida convert qilib qaytarsin.
+
+Masalan: objectToArray({a: 10, b: 20}) return [["a", 10], ["b", 20]]
+
+*/
+function taskP(TASK: any) {
+  return Object.entries(TASK);
+  // Object.keys()     → keylar  array qilib qaytaradi
+  //Object.values()   → valuelar  array qilib qaytaradi
+  //Object.entries()  → key + value  array qilib qaytaradi
+}
+
+console.log(
+  taskP({ name: "Steve", age: 27, nation: "UZB", hooby: "Computer sciense" }),
+);
