@@ -1,3 +1,6 @@
+// VALIDATION: FRONTEND VALIDATION, BACKEND VALIDATION, DATABASE VALIDATION;
+// ENUM ==> Oldindan belgilangan QAT'IY Qiymatlar ketma ketligi  ( ENUMERATION )
+
 /* Project Standards:
 - Logging standards
 - Naming standards:

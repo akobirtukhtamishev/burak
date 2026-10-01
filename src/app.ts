@@ -18,7 +18,7 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
 /** 4-ROUTERS **/
-app.use("/admin", routerAdmin); // SSR: EJS
-app.use("/", router); // SPA: REACT ==> REST API uchun
+app.use("/admin", routerAdmin); // SSR: EJS --- Adminka
+app.use("/", router); // SPA: REACT ==> REST API ---- Haridorlar
 
 export default app;
