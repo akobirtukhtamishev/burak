@@ -1,3 +1,96 @@
+function taskQ(obj: object, property: string): boolean {
+  return property in obj; 
+}
+
+console.log(taskQ({ name: "ethan", age: 27 }, "name"));
+console.log(taskQ({ name: "ethan", job: "develop" }, "age"));
+console.log(taskQ({ name: "ethan", age: 27, job: "branch" }, "title"));
+
+
+// function calculateSumOfNumbers(arr: any[]): number {
+//     let sum:number = 0;
+
+//     for (let i = 0; i < arr.length; i++) {
+//         if (typeof arr[i] === "number") {
+//             // number stringda yozilishini sababi typeof hamisha stringda qiymat qaytaradi
+//             sum += arr[i];
+//         }
+//     }
+
+//     return sum;
+// }
+
+// console.log(
+//     calculateSumOfNumbers([11, "10", { ethan: 10 }, false, 55])
+// );
+
+
+
+/**
+*   Projects Standards:
+*     - Logging Standards
+*     - Naming Standards
+*       function, variable, method => CAMEL
+*       class => PASCAL
+*       CSS => SNAKE
+*
+*     - Erroe Handling
+*       
+* */
+
+
+
+
+// function palindromeCheck(str: string): boolean {
+//     let reversed = "";
+//
+//     for (let i = str.length - 1; i >= 0; i--) {  // bu str oxiridan bitt bittalab reversed ichiga qoyib boradi
+//         reversed += str[i];
+//     }
+//
+//     return str === reversed;
+// }
+//
+// console.log(palindromeCheck("Aziza"));
+// console.log(palindromeCheck("ethan"));
+
+
+
+
+
+// function getSquareNumbers(arr: number[]) {
+//     let result = [];
+//
+//     for (let i = 0; i < arr.length; i++) {
+//         result.push({
+//             number: arr[i],
+//             kvadrat: arr[i] * arr[i]
+//         });
+//     }
+//
+//     return result;
+// }
+//
+// console.log(getSquareNumbers([55, 43, 21]));
+
+
+
+
+// function reverseSentence(str: string): string {
+//     let words: string[] = str.split(" ");
+//     let result: string[] = [];
+//
+//     for (let i = 0; i < words.length; i++) {
+//         result.push(words[i].split("").reverse().join(""));
+//     }
+//
+//     return result.join(" ");
+// }
+//
+// console.log(reverseSentence("my name is ethan"));
+
+
+
 // VALIDATION: FRONTEND VALIDATION, BACKEND VALIDATION, DATABASE VALIDATION;
 // ENUM ==> Oldindan belgilangan QAT'IY Qiymatlar ketma ketligi  ( ENUMERATION )
 
@@ -95,30 +188,3 @@ Objectni nested array sifatida convert qilib qaytarsin.
 
 Masalan: objectToArray({a: 10, b: 20}) return [["a", 10], ["b", 20]]
 */
-
-/*
-function taskP(TASK: any) {
-  return Object.entries(TASK);
-  // Object.keys()     → keylar  array qilib qaytaradi
-  //Object.values()   → valuelar  array qilib qaytaradi
-  //Object.entries()  → key + value  array qilib qaytaradi
-}
-
-console.log(
-  taskP({ name: "Steve", age: 27, nation: "UZB", hooby: "Computer sciense" }),
-); */
-
-/*
-TASK Q
-
-Objectda berilgan string propertysi borligini tekshirsin.
-
-Masalan: hasProperty({name: "BMW"}, "name") return true */
-
-function taskQ(obj: object, property: string): boolean {
-  return property in obj; // -->  in => method orqali objectni ichidagi propertyni tekshirib beradi. ( return "name" obj) shu formulaga tushadi.
-}
-
-console.log(taskQ({ name: "ethan", age: 27 }, "name"));
-console.log(taskQ({ name: "ethan", job: "develop" }, "age"));
-console.log(taskQ({ name: "ethan", age: 27, job: "develop" }, "job"));
