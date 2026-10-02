@@ -7,11 +7,11 @@ console.log(taskQ({ name: "ethan", job: "develop" }, "age"));
 console.log(taskQ({ name: "ethan", age: 27, job: "branch" }, "title"));
 
 
-function objectToArray(obj: object): [string, any][] {
-    return Object.entries(obj);
-}
+// function objectToArray(obj: object): [string, any][] {
+//     return Object.entries(obj);
+// }
 
-console.log(objectToArray({ a: 15, b: 22 }));
+// console.log(objectToArray({ a: 15, b: 22 }));
 
 
 // function calculateSumOfNumbers(arr: any[]): number {
