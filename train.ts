@@ -119,6 +119,6 @@ function taskQ(obj: object, property: string): boolean {
   return property in obj; // -->  in => method orqali objectni ichidagi propertyni tekshirib beradi. ( return "name" obj) shu formulaga tushadi.
 }
 
-console.log(taskQ({ name: "Steve", age: 27 }, "name"));
-console.log(taskQ({ name: "Steve", job: "develop" }, "age"));
-console.log(taskQ({ name: "Steve", age: 27, job: "develop" }, "job"));
+console.log(taskQ({ name: "ethan", age: 27 }, "name"));
+console.log(taskQ({ name: "ethan", job: "develop" }, "age"));
+console.log(taskQ({ name: "ethan", age: 27, job: "develop" }, "job"));
