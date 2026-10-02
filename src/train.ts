@@ -94,8 +94,9 @@ TASK P
 Objectni nested array sifatida convert qilib qaytarsin.
 
 Masalan: objectToArray({a: 10, b: 20}) return [["a", 10], ["b", 20]]
-
 */
+
+/*
 function taskP(TASK: any) {
   return Object.entries(TASK);
   // Object.keys()     → keylar  array qilib qaytaradi
@@ -105,4 +106,19 @@ function taskP(TASK: any) {
 
 console.log(
   taskP({ name: "Steve", age: 27, nation: "UZB", hooby: "Computer sciense" }),
-);
+); */
+
+/*
+TASK Q
+
+Objectda berilgan string propertysi borligini tekshirsin.
+
+Masalan: hasProperty({name: "BMW"}, "name") return true */
+
+function taskQ(obj: object, property: string): boolean {
+  return property in obj; // -->  in => method orqali objectni ichidagi propertyni tekshirib beradi. ( return "name" obj) shu formulaga tushadi.
+}
+
+console.log(taskQ({ name: "Steve", age: 27 }, "name"));
+console.log(taskQ({ name: "Steve", job: "develop" }, "age"));
+console.log(taskQ({ name: "Steve", age: 27, job: "develop" }, "job"));
