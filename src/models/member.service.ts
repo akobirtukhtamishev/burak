@@ -24,7 +24,7 @@ class MemberService {
       result.memberPassword = "";
       return result.toJSON();
     } catch (err) {
-      console.log("Error, model:signup", err);
+      console.error("Error, model:signup", err);
       throw new Errors(HttpCode.BAD_REQUEST, Message.USED_NICK_PHONE);
     }
   }
@@ -56,13 +56,12 @@ class MemberService {
       .exec();
     if (exist) throw new Errors(HttpCode.BAD_REQUEST, Message.CREATE_FAILED);
 
-    console.log("before:", input.memberPassword); // bizga o'ziz bir review qilib bering qaysi joy qqanday o'qilishini bilmayapmiz
-    const salt = await bcrypt.genSalt(); // await ozi ham ishlatiladimi async yo'qku buyerda
+    const salt = await bcrypt.genSalt();
     input.memberPassword = await bcrypt.hash(input.memberPassword, salt);
-    console.log("after:", input.memberPassword);
 
     try {
       const result = await this.memberModel.create(input);
+      result.memberPassword = "";
       return result;
     } catch (err) {
       throw new Errors(HttpCode.BAD_REQUEST, Message.CREATE_FAILED);

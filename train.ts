@@ -1,10 +1,25 @@
-function taskQ(obj: object, property: string): boolean {
-  return property in obj; 
+function calculate(str: string): number {
+    const numbers = str.split("+");
+    let sum: number = 0;
+
+    for (let i = 0; i < numbers.length; i++) {
+        sum += Number(numbers[i]);
+    }
+
+    return sum;
 }
 
-console.log(taskQ({ name: "ethan", age: 27 }, "name"));
-console.log(taskQ({ name: "ethan", job: "develop" }, "age"));
-console.log(taskQ({ name: "ethan", age: 27, job: "branch" }, "title"));
+console.log(calculate("1 + 3 + 5")); 
+console.log(calculate("10 + 20"));
+
+
+// function taskQ(obj: object, property: string): boolean {
+//   return property in obj; 
+// }
+
+// console.log(taskQ({ name: "ethan", age: 27 }, "name"));
+// console.log(taskQ({ name: "ethan", job: "develop" }, "age"));
+// console.log(taskQ({ name: "ethan", age: 27, job: "branch" }, "title"));
 
 
 // function objectToArray(obj: object): [string, any][] {
