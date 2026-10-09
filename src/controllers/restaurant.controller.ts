@@ -1,9 +1,9 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { T } from "../libs/types/common";
 import MemberService from "../models/member.service";
 import { AdminRequest, LoginInput, MemberInput } from "../libs/types/member";
 import { MemberType } from "../libs/enums/member.enum";
-import Errors, { Message } from "../libs/Errors";
+import Errors, { HttpCode, Message } from "../libs/Errors";
 
 const memberService = new MemberService();
 
@@ -12,12 +12,14 @@ restaurantController.goHome = (req: Request, res: Response) => {
   try {
     console.log("goHome");
     res.render("home");
-    // respons turlari: send, end, json, render, redirect
+    // response turlari: => send | end | json | render | redirect |
   } catch (err) {
     console.log("Error, goHome:", err);
     res.redirect("/admin");
   }
 };
+
+/** ********************************************** */
 
 restaurantController.getSignup = (req: Request, res: Response) => {
   try {
@@ -29,6 +31,8 @@ restaurantController.getSignup = (req: Request, res: Response) => {
   }
 };
 
+/** ********************************************** */
+
 restaurantController.getLogin = (req: Request, res: Response) => {
   try {
     console.log("getLogin");
@@ -38,6 +42,7 @@ restaurantController.getLogin = (req: Request, res: Response) => {
     res.redirect("/admin");
   }
 };
+/** ********************************************** */
 
 restaurantController.processSignup = async (
   req: AdminRequest,
@@ -45,13 +50,18 @@ restaurantController.processSignup = async (
 ) => {
   try {
     console.log("processSignup");
+    const file = req.file;
+    if (!file)
+      throw new Errors(HttpCode.BAD_REQUEST, Message.SOMETHING_WENT_WRONG);
+
     const newMember: MemberInput = req.body;
+    newMember.memberImage = file?.path;
     newMember.memberType = MemberType.RESTAURANT;
     const result = await memberService.processSignup(newMember);
 
     req.session.member = result;
     req.session.save(function () {
-      res.send(result);
+      res.redirect("/admin/product/all");
     });
   } catch (err) {
     console.log("Error, processSignup", err);
@@ -62,6 +72,8 @@ restaurantController.processSignup = async (
     );
   }
 };
+
+/** ********************************************** */
 
 restaurantController.processLogin = async (
   req: AdminRequest,
@@ -75,7 +87,7 @@ restaurantController.processLogin = async (
 
     req.session.member = result;
     req.session.save(function () {
-      res.send(result);
+      res.redirect("/admin/product/all");
     });
   } catch (err) {
     console.log("Error, processlogin", err);
@@ -86,6 +98,8 @@ restaurantController.processLogin = async (
     );
   }
 };
+
+/** ********************************************** */
 
 restaurantController.logout = async (req: AdminRequest, res: Response) => {
   try {
@@ -98,6 +112,8 @@ restaurantController.logout = async (req: AdminRequest, res: Response) => {
     res.redirect("/admin");
   }
 };
+
+/** ********************************************** */
 
 restaurantController.checkAuthSession = async (
   req: AdminRequest,
@@ -113,6 +129,24 @@ restaurantController.checkAuthSession = async (
   } catch (err) {
     console.log("Error, checkAuthSession", err);
     res.send(err);
+  }
+};
+
+/** ********************************************** */
+
+restaurantController.verifyRestaurant = (
+  req: AdminRequest,
+  res: Response,
+  next: NextFunction,
+) => {
+  if (req.session?.member?.memberType === MemberType.RESTAURANT) {
+    req.member = req.session.member;
+    next();
+  } else {
+    const message = Message.NOT_AUTHENTICATED;
+    res.send(
+      ` <script> alert("${message}"); window.location.replace('/admin/login');</script>`,
+    );
   }
 };
 

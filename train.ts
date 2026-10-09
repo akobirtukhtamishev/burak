@@ -1,16 +1,36 @@
-function calculate(str: string): number {
-    const numbers = str.split("+");
-    let sum: number = 0;
-
-    for (let i = 0; i < numbers.length; i++) {
-        sum += Number(numbers[i]);
+function missingNumber(arr: number[]): number[] {
+    const result: number[] = [];
+    const min = Math.min(...arr);
+    const max = Math.max(...arr);
+    for (let i = min; i <= max; i++) {
+        if (!arr.includes(i)) {
+            result.push(i);
+        }
     }
 
-    return sum;
+    return result;
 }
 
-console.log(calculate("1 + 3 + 5")); 
-console.log(calculate("10 + 20"));
+// Bu funksiya berilgan arraydan eng kichik va eng katta sonlar o'rtasidagi sonlarni tushib qolganini chiqarib beradi
+
+console.log(missingNumber([-20, 10, 2, 20]));
+
+
+
+
+// function calculate(str: string): number {
+//     const numbers = str.split("+");
+//     let sum: number = 0;
+
+//     for (let i = 0; i < numbers.length; i++) {
+//         sum += Number(numbers[i]);
+//     }
+
+//     return sum;
+// }
+
+// console.log(calculate("1 + 3 + 5")); 
+// console.log(calculate("10 + 20"));
 
 
 // function taskQ(obj: object, property: string): boolean {
