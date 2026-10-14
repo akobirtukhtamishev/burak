@@ -39,10 +39,10 @@ class ProductService {
   /** *************************************************** */
 
   public async updateChosenProduct(
-    id: string,
+    id: string, // nega string qilib oldik. SAVOL ???????????
     input: ProductUpdateInput,
   ): Promise<Product> {
-    id = shapeIntoMongooseObjectId(id);
+    id = shapeIntoMongooseObjectId(id); // nega yana ObjectId ga aylantiryapmiz
     const result = await this.productModel
       .findOneAndUpdate({ _id: id }, input, { new: true })
       .exec();

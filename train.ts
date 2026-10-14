@@ -1,30 +1,39 @@
-function missingNumber(arr: number[]): number[] {
-    const result: number[] = [];
-    const min = Math.min(...arr);
-    const max = Math.max(...arr);
-    for (let i = min; i <= max; i++) {
-        if (!arr.includes(i)) {
-            result.push(i);
-        }
-    }
-
-    return result;
+function mergeSortedArrays(arr1: number[], arr2: number[]): number[] {
+  return [...arr1, ...arr2].sort((a, b) => a - b);
 }
 
-// Bu funksiya berilgan arraydan eng kichik va eng katta sonlar o'rtasidagi sonlarni tushib qolganini chiqarib beradi
+console.log(mergeSortedArrays([55, 17, 18, 1099], [4, 6, 75, 0, 99]));
 
-console.log(missingNumber([-20, 10, 2, 20]));
+
+
+
+// function missingNumber(arr: number[]): number[] {
+//     const result: number[] = [];
+//     const min = Math.min(...arr);
+//     const max = Math.max(...arr);
+//     for (let i = min; i <= max; i++) {
+//         if (!arr.includes(i)) {
+//             result.push(i);
+//         }
+//     }
+
+//     return result;
+// }
+
+// // Bu funksiya berilgan arraydan eng kichik va eng katta sonlar o'rtasidagi sonlarni tushib qolganini chiqarib beradi
+// console.log(missingNumber([-20, 10, 2, 20]));
+
 
 
 
 
 // function calculate(str: string): number {
-//     const numbers = str.split("+");
-//     let sum: number = 0;
+  //     const numbers = str.split("+");
+  //     let sum: number = 0;
 
 //     for (let i = 0; i < numbers.length; i++) {
-//         sum += Number(numbers[i]);
-//     }
+  //         sum += Number(numbers[i]);
+  //     }
 
 //     return sum;
 // }

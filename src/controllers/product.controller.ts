@@ -4,7 +4,6 @@ import { T } from "../libs/types/common";
 import ProductService from "../models/Product.service";
 import { ProductInput } from "../libs/types/product";
 import { AdminRequest } from "../libs/types/member";
-import { stringify } from "uuid";
 
 const productService = new ProductService();
 
@@ -18,7 +17,6 @@ productController.getAllProducts = async (req: Request, res: Response) => {
     console.log("getAllProducts");
     const data = await productService.getAllProducts();
 
-    console.log("data:", data);
     res.render("products", { products: data });
   } catch (err) {
     console.log("Error, getAllProducts", err);
@@ -63,7 +61,7 @@ productController.createNewProduct = async (
 productController.updateChosenProduct = async (req: Request, res: Response) => {
   try {
     console.log("updateChosenProduct");
-    const id = req.params.id as string; // shu qo'shimcha qo'shildi < as string >
+    const id = req.params.id as string;
 
     const result = await productService.updateChosenProduct(id, req.body);
 

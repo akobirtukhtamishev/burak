@@ -11,8 +11,8 @@ import { T } from "./libs/types/common";
 
 const MongoDBStore = ConnectMongoDB(session);
 const store = new MongoDBStore({
-  uri: String(process.env.MONGO_URL),
-  collection: "sessions",
+  uri: String(process.env.MONGO_URL), // Bu qator esa Bizning database ga ulab beradi
+  collection: "sessions",  // bu database da "sessions" nomi bilan collection yaratib beradi
 });
 
 /** 1-ENTRANCE **/
