@@ -52,13 +52,15 @@ restaurantController.processSignup = async (
 ) => {
   try {
     console.log("processSignup");
-    const file = req.file;
+    const file = req.file;  // biz multer orqali upload qilingan faylni req.file orqali olamiz
     if (!file)
       throw new Errors(HttpCode.BAD_REQUEST, Message.SOMETHING_WENT_WRONG);
 
     // postmandan kiritgan req.body dagi malumotlaarrni newMemberga tenglab olaybmiz
     const newMember: MemberInput = req.body;
-    newMember.memberImage = file?.path;
+    
+    // bu qismda biz olingan fayl manzilini schema modeldagi memberImage ga tenglayabmiz
+    newMember.memberImage = file?.path; 
 
     // Biz admin signup qilishi uchun uni togridan togri RESTAURANT ga tenglab ketayabmiz. chunki bitta admin boladi
     newMember.memberType = MemberType.RESTAURANT;

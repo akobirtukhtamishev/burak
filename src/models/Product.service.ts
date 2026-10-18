@@ -11,7 +11,10 @@ class ProductService {
   private readonly productModel;
 
   constructor() {
-    this.productModel = ProductModel;
+    
+    // bu yerda productModel ga ProductModel(schema) ni tenglashtirib olyabmiz. Chunki biz product.service modelni 
+    // chaqirib olyapmiz va shu model orqali database bilan ishlayapmiz
+    this.productModel = ProductModel; 
   }
 
   /** SPA */
@@ -39,12 +42,21 @@ class ProductService {
   /** *************************************************** */
 
   public async updateChosenProduct(
-    id: string, // nega string qilib oldik. SAVOL ???????????
+    id: string,  // url da kiritilgan product id ni string qilib olamiz. Chunki url da faqat string tipidagi malumotlar keladi
     input: ProductUpdateInput,
   ): Promise<Product> {
+
+    // string => ObjectId ga aylantirishimiz sababi esa biz product.controller da req.params.id ni string qilib olamiz va uni database da ObjectId tipida saqlaymiz. Biz uni database dan ObjectId orqali izlaymiz
     id = shapeIntoMongooseObjectId(id); // nega yana ObjectId ga aylantiryapmiz
     const result = await this.productModel
       .findOneAndUpdate({ _id: id }, input, { new: true })
+
+      /*
+      { _id: id } bu qismda biz database da productni izlayapmiz. Chunki biz productni update qilmoqchimiz va update qilinadigan productni topishimiz kerak. Biz productni id orqali izlayapmiz. Chunki har bir productning unique id si bor va u database da ObjectId tipida saqlanadi. Biz esa url da kiritilgan id ni string qilib olamiz va uni ObjectId ga aylantirib database da izlaymiz
+      input bu qismda biz update qilinadigan productni malumotlarini berayapmiz. 
+      { new: true } bu qismda biz update qilinadigan productni malumotlarini qaytarayapmiz. Chunki findOneAndUpdate metodi default bo'yicha update qilinadigan productni malumotlarini qaytarmaydi. Biz esa update qilinadigan productni malumotlarini qaytarishimiz kerak. Shuning uchun { new: true } ni berayapmiz
+      */ 
+
       .exec();
 
     if (!result) throw new Errors(HttpCode.NOT_MODIFIED, Message.UPDATE_FAILED);

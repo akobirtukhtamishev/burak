@@ -62,7 +62,7 @@ const productSchema = new Schema(
     },
   },
 
-  { timestamps: true }, // updatedAt, createdAt
+  { timestamps: true },
 );
 
 productSchema.index(

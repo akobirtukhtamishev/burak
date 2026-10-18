@@ -56,6 +56,9 @@ export interface AdminRequest extends Request {
   // req.session.member = result;
   member: Member;
   session: Session & { member: Member }; // biz bu yerda session ichida member borligini ham ta'kidlayabmiz
+  
+  // admin kiritayotgan req.body dan olinayotgan malumotlar orasida fayl ham mavjud 
+  // va bu fayllar express kutubxonasining multer tipida bolishini korsatayabdi. Adming ayozayptganimiz sababi esa productni admin ctreate qila oladi
   file: Express.Multer.File;
   files: Express.Multer.File[];
 }

@@ -39,11 +39,13 @@ class MemberService {
     }
   }
 
+  /** =======================================================================================**/
+
   public async login(input: LoginInput): Promise<Member> {
     const member = await this.memberModel
       .findOne(
-        { memberNick: input.memberNick, memberStatus: MemberStatus.ACTIVE }, // findOne ga 2 chi {..} qilib ichiga yozilgan narsa
-        { memberNick: 1, memberPassword: 1 }, //  <=== maxfiy ma'lumotni majburiy chaqirish usuli.
+        { memberNick: input.memberNick, memberStatus: MemberStatus.ACTIVE }, 
+        { memberNick: 1, memberPassword: 1 }, 
       )
       .exec();
     if (!member) throw new Errors(HttpCode.NOT_FOUND, Message.NO_MEMBER_NICK);
@@ -96,6 +98,8 @@ class MemberService {
     }
   }
 
+/** ======================================================================================= **/
+
   public async processLogin(input: LoginInput): Promise<Member> {
     const member = await this.memberModel
       .findOne(
@@ -118,6 +122,8 @@ class MemberService {
     return await this.memberModel.findById(member._id).exec(); // umumiy olingan malumotlarni olib processLogin dagi resultga tenglaymiz
   }
 
+/** ======================================================================================= **/
+
   public async getUsers(): Promise<Member[]> {
     const result = await this.memberModel
       .find({ memberType: MemberType.USER })
@@ -127,7 +133,7 @@ class MemberService {
     return result;
   }
 
-  /** ********************************************** */
+/** ======================================================================================= **/
 
   public async updateChosenUser(input: MemberUpdateInput): Promise<Member> {
     input._id = shapeIntoMongooseObjectId(input._id);

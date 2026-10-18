@@ -11,8 +11,8 @@ routerAdmin
   .get("/signup", restaurantController.getSignup)
   .post(
     "/signup",
-    makeUploader("members").single("memberImage"),
-    restaurantController.processSignup,
+    makeUploader("members").single("memberImage"), // multer bizga req.file orqali upload qilingan fayllarni oberadi
+    restaurantController.processSignup,            // undan keyin processSignup methodi ishga tushadi 
   );
 routerAdmin
   .get("/login", restaurantController.getLogin)

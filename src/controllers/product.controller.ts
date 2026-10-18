@@ -33,13 +33,22 @@ productController.createNewProduct = async (
 ) => {
   try {
     console.log("createNewProduct");
-    console.log("req.files:", req.files);
+
+    // restoran controllerda req.file bu bu yerda esa req.files bolishini sababi biz bu yerda bittadan koproq fayl yuklayabmiz
+    console.log("req.files:", req.files);  
+    
     if (!req.files?.length)
       throw new Errors(HttpCode.INTERNAL_SERVER_ERROR, Message.CREATE_FAILED);
 
     const data: ProductInput = req.body;
-    data.productImages = req.files?.map((ele) => {
-      return ele.path;
+
+    // req.files tipidagi maulumot turlari qanday malumotlar? Amin type dagi malumotlar va 
+    // ular array korinishida keladi. Admin request bu interfacce
+    data.productImages = req.files?.map((ele) => {  // map bu yerda iteration qiladi
+      
+      // bu req.files ichidagi faylllar ning path ni saqlab beraddi (masalan qaysi papkadaligi
+      //  va database da ekanligi). korsatib beradi. bizning loyihada esa uploads fayliga borib tushadi fayllar 
+      return ele.path;   
     });
 
     await productService.createNewProduct(data);
@@ -48,9 +57,12 @@ productController.createNewProduct = async (
     );
   } catch (err) {
     console.log("Error, createNewProduct", err);
+    
     const message =
+      // agar biz yaratgan Errors class dagi xatolik bolsa o'shani olib ber, : aks hold umumiy SMTH WENT WRONG xatoligini ber
       err instanceof Errors ? err.message : Message.SOMETHING_WENT_WRONG;
-    res.send(
+    
+      res.send(
       `<script> alert("${message}"); window.location.replace('admin/product/all') </script>`,
     );
   }

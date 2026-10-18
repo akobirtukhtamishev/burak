@@ -51,7 +51,7 @@ const memberSchema = new Schema(
       default: 0,
     },
   },
-  { timestamps: true }, // createdAt , updatedAt qachon hosil qilingani bildiradi.
+  { timestamps: true }, 
 );
 
 export default mongoose.model("Member", memberSchema);

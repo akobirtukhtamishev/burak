@@ -37,7 +37,7 @@ app.use(
 
 app.use(function (req, res, next) {
   const sessionInstance = req.session as T;
-  res.locals.member = sessionInstance.member;
+  res.locals.member = sessionInstance.member; // biz bu yerda session ichidagi member ni browserdagi res.locals ga tenglab olyabmiz. Chunki biz bu malumotni ejs fayllarida ishlatmoqchimiz
   next();
 });
 
