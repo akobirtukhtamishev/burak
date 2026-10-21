@@ -1,8 +1,29 @@
-function mergeSortedArrays(arr1: number[], arr2: number[]): number[] {
-  return [...arr1, ...arr2].sort((a, b) => a - b);
+function countChars(str: string): { [key: string]: number } {
+  const result: { [key: string]: number } = {};
+
+  for (const char of str) {
+    if (result[char]) {
+      result[char]++;
+    } else {
+      result[char] = 1;
+    }
+  }
+
+  return result;
 }
 
-console.log(mergeSortedArrays([55, 17, 18, 1099], [4, 6, 75, 0, 99]));
+console.log(countChars("mazza"));
+
+
+
+
+
+
+// function mergeSortedArrays(arr1: number[], arr2: number[]): number[] {
+//   return [...arr1, ...arr2].sort((a, b) => a - b);
+// }
+
+// console.log(mergeSortedArrays([55, 17, 18, 1099], [4, 6, 75, 0, 99]));
 
 
 
