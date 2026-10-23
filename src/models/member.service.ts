@@ -28,7 +28,6 @@ class MemberService {
     input.memberPassword = await bcrypt.hash(input.memberPassword, salt);
     console.log("after:", input.memberPassword);
 
-
     try {
       const result = await this.memberModel.create(input); // input parametr bu restoran.controllerdagi newMember ga teng
       result.memberPassword = "";
@@ -44,11 +43,15 @@ class MemberService {
   public async login(input: LoginInput): Promise<Member> {
     const member = await this.memberModel
       .findOne(
-        { memberNick: input.memberNick, memberStatus: MemberStatus.ACTIVE }, 
-        { memberNick: 1, memberPassword: 1 }, 
+        { memberNick: input.memberNick, memberStatus: { $ne: MemberStatus.DELETE } }, // buni ma'nosi member DELETE Bo'lmagan bo'lsa ruxsat ber login qilishga
+        { memberNick: 1, memberPassword: 1, memberStatus: 1 },  //  <=== maxfiy ma'lumotni majburiy chaqirish usuli.
       )
       .exec();
     if (!member) throw new Errors(HttpCode.NOT_FOUND, Message.NO_MEMBER_NICK);
+    else if(member.memberStatus === MemberStatus.BLOCK) {
+      throw new Errors(HttpCode.FORBIDDEN, Message.BLOCKED_USER);
+    }
+
 
     // biz bu qismda user kiritayotgan input.memberPassword bilan database dagi member.memberPassword ni solishtiramiz
     const isMatch = await bcrypt.compare(  // bcrypt.compare bu hashing ni tekshiradi
@@ -104,9 +107,9 @@ class MemberService {
     const member = await this.memberModel
       .findOne(
         // chapdagi memberNick bu databasega yozilgan malumot, o'ng tarafdagi input.memberNick esa admin RESTAURANT login qilish uchun login page da kiritayotagn memberNick
-        { memberNick: input.memberNick },
+        { memberNick: input.memberNick }, // filter
         // chapdagi memberPassword bu databasega yozilgan malumot, o'ng tarafdagi input.memberPassword esa admin RESTAURANT login qilish uchun login page da kiritayotagn memberPassword
-        { memberNick: 1, memberPassword: 1 }, // memberPassword emas member.memberPassword bo'lsa ham togri boladimi?
+        { memberNick: 1, memberPassword: 1 }, // (Projection) memberPassword emas member.memberPassword bo'lsa ham togri boladimi? //  <=== maxfiy ma'lumotni majburiy chaqirish usuli.
       )
       .exec();
     if (!member) throw new Errors(HttpCode.NOT_FOUND, Message.NO_MEMBER_NICK);
