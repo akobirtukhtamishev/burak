@@ -1,18 +1,31 @@
-function countChars(str: string): { [key: string]: number } {
-  const result: { [key: string]: number } = {};
+function qismliArraay(arr: number[], size: number): number[][] {
+  const result: number[][] = [];
 
-  for (const char of str) {
-    if (result[char]) {
-      result[char]++;
-    } else {
-      result[char] = 1;
-    }
+  for (let i = 0; i < arr.length; i += size) {
+    result.push(arr.slice(i, i + size));
   }
 
   return result;
 }
 
-console.log(countChars("mazza"));
+console.log(qismliArraay([1, 2, 3, 4, 5, 7, 55, 90, 6], 3));
+
+
+// function countChars(str: string): { [key: string]: number } {
+//   const result: { [key: string]: number } = {};
+
+//   for (const char of str) {
+//     if (result[char]) {
+//       result[char]++;
+//     } else {
+//       result[char] = 1;
+//     }
+//   }
+
+//   return result;
+// }
+
+// console.log(countChars("mazza"));
 
 
 
