@@ -1,14 +1,38 @@
-function qismliArraay(arr: number[], size: number): number[][] {
-  const result: number[][] = [];
+function countOccurrences(
+  obj: { [key: string]: any },
+  key: string
+): number {
+  let count = 0;
 
-  for (let i = 0; i < arr.length; i += size) {
-    result.push(arr.slice(i, i + size));
+  for (const currentKey in obj) {
+    if (currentKey === key) {
+      count++;
+    }
+
+    if (typeof obj[currentKey] === "object" && obj[currentKey] !== null) {
+      count += countOccurrences(obj[currentKey], key);
+    }
   }
 
-  return result;
+  return count;
 }
 
-console.log(qismliArraay([1, 2, 3, 4, 5, 7, 55, 90, 6], 3));
+console.log(countOccurrences({model: "A",s: { model: "B",}},"model"));
+
+
+
+
+// function qismliArraay(arr: number[], size: number): number[][] {
+//   const result: number[][] = [];
+
+//   for (let i = 0; i < arr.length; i += size) {
+//     result.push(arr.slice(i, i + size));
+//   }
+
+//   return result;
+// }
+
+// console.log(qismliArraay([1, 2, 3, 4, 5, 7, 55, 90, 6], 3));
 
 
 // function countChars(str: string): { [key: string]: number } {
