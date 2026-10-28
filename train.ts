@@ -1,23 +1,33 @@
-function countOccurrences(
-  obj: { [key: string]: any },
-  key: string
-): number {
-  let count = 0;
-
-  for (const currentKey in obj) {
-    if (currentKey === key) {
-      count++;
-    }
-
-    if (typeof obj[currentKey] === "object" && obj[currentKey] !== null) {
-      count += countOccurrences(obj[currentKey], key);
-    }
-  }
-
-  return count;
+function findTheSameValues(arr1: number[], arr2: number[]): number[] {
+  return arr1.filter((num) => arr2.includes(num));
 }
 
-console.log(countOccurrences({model: "A",s: { model: "B",}},"model"));
+console.log(findTheSameValues([22, 2, 3, 7, 9], [3, 2, 7, 9, 10, 0]));
+// [2, 3]
+
+
+
+
+// function countOccurrences(
+//   obj: { [key: string]: any },
+//   key: string
+// ): number {
+//   let count = 0;
+
+//   for (const currentKey in obj) {
+//     if (currentKey === key) {
+//       count++;
+//     }
+
+//     if (typeof obj[currentKey] === "object" && obj[currentKey] !== null) {
+//       count += countOccurrences(obj[currentKey], key);
+//     }
+//   }
+
+//   return count;
+// }
+
+// console.log(countOccurrences({model: "A",s: { model: "B",}},"model"));
 
 
 
