@@ -1,9 +1,26 @@
-function findTheSameValues(arr1: number[], arr2: number[]): number[] {
-  return arr1.filter((num) => arr2.includes(num));
+function sumEvens(arr: number[]): number {
+  let sum = 0;
+
+  for (const num of arr) {
+    if (num % 2 === 0) {
+      sum += num;
+    }
+  }
+
+  return sum;
 }
 
-console.log(findTheSameValues([22, 2, 3, 7, 9], [3, 2, 7, 9, 10, 0]));
-// [2, 3]
+console.log(sumEvens([22, 13, 14, 37, 1, 2, 3, 992]));
+
+
+
+
+// function findTheSameValues(arr1: number[], arr2: number[]): number[] {
+//   return arr1.filter((num) => arr2.includes(num));
+// }
+
+// console.log(findTheSameValues([22, 2, 3, 7, 9], [3, 2, 7, 9, 10, 0]));
+// // [2, 3]
 
 
 
