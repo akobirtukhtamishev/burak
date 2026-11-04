@@ -8,11 +8,12 @@ import { MORGAN_FORMAT } from "./libs/config";
 import session from "express-session";
 import ConnectMongoDB from "connect-mongodb-session";
 import { T } from "./libs/types/common";
+import cookieParser from "cookie-parser";
 
 const MongoDBStore = ConnectMongoDB(session);
 const store = new MongoDBStore({
-  uri: String(process.env.MONGO_URL), // Bu qator esa Bizning database ga ulab beradi
-  collection: "sessions",  // bu database da "sessions" nomi bilan collection yaratib beradi
+    uri: String(process.env.MONGO_URL),
+    collection: "sessions",
 });
 
 /** 1-ENTRANCE **/
@@ -20,25 +21,26 @@ const app = express();
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cookieParser());
 app.use(morgan(MORGAN_FORMAT));
 
 /** 2-SESSIONS **/
 app.use(
-  session({
-    secret: String(process.env.SESSION_SECRET),
-    cookie: {
-      maxAge: 1000 * 3600 * 6, // 6 hours
-    },
-    store: store, // collection ichidagi nomi; collectionni nomi => "sessions"
-    resave: true, // "true" bo'lsa oxirgi kirgan vaqtdan boshlab 3 soat amal qiladi, "false" bo'lsa birinchi kirgan vaqtdan boshlab 3 soat amal qiladi.
-    saveUninitialized: true,
-  }),
+    session({
+        secret: String(process.env.SESSION_SECRET),
+        cookie: {
+            maxAge: 1000 * 3600 * 6, // 6 hours
+        },
+        store: store, // collection ichidagi nomi; collectionni nomi => "sessions"
+        resave: true, // "true" bo'lsa oxirgi kirgan vaqtdan boshlab 3 soat amal qiladi, "false" bo'lsa birinchi kirgan vaqtdan boshlab 3 soat amal qiladi.
+        saveUninitialized: false,
+    }),
 );
 
 app.use(function (req, res, next) {
-  const sessionInstance = req.session as T;
-  res.locals.member = sessionInstance.member; // biz bu yerda session ichidagi member ni browserdagi res.locals ga tenglab olyabmiz. Chunki biz bu malumotni ejs fayllarida ishlatmoqchimiz
-  next();
+    const sessionInstance = req.session as T;
+    res.locals.member = sessionInstance.member;
+    next();
 });
 
 /** 3-VIEWS **/
