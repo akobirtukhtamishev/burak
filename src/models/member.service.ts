@@ -19,6 +19,17 @@ class MemberService {
 
   /**  SPA  */
 
+  public async getRestaurant(): Promise<Member> {
+    const result = await this.memberModel
+        .findOne({ memberType: MemberType.RESTAURANT })
+        .exec();
+    if (!result) throw new Errors(HttpCode.NOT_FOUND, Message.NO_DATA_FOUND);
+
+    return result;
+  }
+
+  /** ********************************************** */
+
   public async signup(input: MemberInput): Promise<Member> {
     const salt = await bcrypt.genSalt();
     input.memberPassword = await bcrypt.hash(input.memberPassword, salt);
@@ -60,12 +71,42 @@ class MemberService {
     return await this.memberModel.findById(member._id).lean().exec();
   }
 
+  /** ********************************************** */
+
   public async getMemberDetail(member: Member): Promise<Member> {
     const memberId = shapeIntoMongooseObjectId(member._id);
     const result = await this.memberModel
         .findOne({ _id: memberId, memberStatus: MemberStatus.ACTIVE })
         .exec();
 
+    if (!result) throw new Errors(HttpCode.NOT_FOUND, Message.NO_DATA_FOUND);
+
+    return result;
+  }
+
+  /** ********************************************** */
+
+  public async updateMember(
+      member: Member,
+      input: MemberUpdateInput,
+  ): Promise<Member> {
+    const memberId = shapeIntoMongooseObjectId(member._id);
+    const result = await this.memberModel
+        .findOneAndUpdate({ _id: memberId }, input, { new: true })
+        .exec();
+    if (!result) throw new Errors(HttpCode.NOT_MODIFIED, Message.UPDATE_FAILED);
+
+    return result;
+  }
+
+  /** ********************************************** */
+
+  public async getTopUsers(): Promise<Member[]> {
+    const result = await this.memberModel
+        .find({ memberStatus: MemberStatus.ACTIVE, memberPoints: { $gte: 1 } })
+        .sort({ memberPoints: -1 }) // eng yuqori pointdan pastga qarab degani < 1 yoki +1 > bolsa eng past pointdan yuqoriga qarab sort qiladi
+        .limit(4)
+        .exec();
     if (!result) throw new Errors(HttpCode.NOT_FOUND, Message.NO_DATA_FOUND);
 
     return result;
