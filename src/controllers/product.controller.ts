@@ -2,13 +2,55 @@ import { Request, Response } from "express";
 import Errors, { HttpCode, Message } from "../libs/Errors";
 import { T } from "../libs/types/common";
 import ProductService from "../models/Product.service";
-import { ProductInput } from "../libs/types/product";
-import { AdminRequest } from "../libs/types/member";
+import { ProductInput, ProductInquiry } from "../libs/types/product";
+import { AdminRequest, ExtendedRequest } from "../libs/types/member";
+import { ProductCollection } from "../libs/enums/product.enum";
 
 const productService = new ProductService();
 
 const productController: T = {};
+
 /** SPA */
+productController.getProducts = async (req: Request, res: Response) => {
+  try {
+    console.log("getProducts");
+    const { page, limit, order, productCollection, search } = req.query;
+    const inquiry: ProductInquiry = {
+      order: String(order),
+      page: Number(page),
+      limit: Number(limit),
+    };
+    if (productCollection)
+      inquiry.productCollection = productCollection as ProductCollection;
+
+    if (search) inquiry.search = String(search);
+
+    const result = await productService.getProducts(inquiry);
+
+    res.status(HttpCode.OK).json(result);
+  } catch (err) {
+    console.log("Error, getProducts", err);
+    if (err instanceof Errors) res.status(err.code).json(err);
+    else res.status(Errors.standard.code).json(Errors.standard);
+  }
+};
+
+/** *************************************************** */
+
+productController.getProduct = async (req: ExtendedRequest, res: Response) => {
+  try {
+    console.log("getProduct");
+    const { id } = req.params,
+        memberId = req.member?._id ?? null,
+        result = await productService.getProduct(memberId, id);
+
+    res.status(HttpCode.OK).json(result);
+  } catch (err) {
+    console.log("Error, getProduct", err);
+    if (err instanceof Errors) res.status(err.code).json(err);
+    else res.status(Errors.standard.code).json(Errors.standard);
+  }
+};
 
 /** SSR */
 
@@ -28,42 +70,30 @@ productController.getAllProducts = async (req: Request, res: Response) => {
 /** *************************************************** */
 
 productController.createNewProduct = async (
-  req: AdminRequest,
-  res: Response,
+    req: AdminRequest,
+    res: Response,
 ) => {
   try {
     console.log("createNewProduct");
-
-    // restoran controllerda req.file bu bu yerda esa req.files bolishini sababi biz bu yerda bittadan koproq fayl yuklayabmiz
-    console.log("req.files:", req.files);  
-    
+    console.log("req.files:", req.files);
     if (!req.files?.length)
       throw new Errors(HttpCode.INTERNAL_SERVER_ERROR, Message.CREATE_FAILED);
 
     const data: ProductInput = req.body;
-
-    // req.files tipidagi maulumot turlari qanday malumotlar? Amin type dagi malumotlar va 
-    // ular array korinishida keladi. Admin request bu interfacce
-    data.productImages = req.files?.map((ele) => {  // map bu yerda iteration qiladi
-      
-      // bu req.files ichidagi faylllar ning path ni saqlab beraddi (masalan qaysi papkadaligi
-      //  va database da ekanligi). korsatib beradi. bizning loyihada esa uploads fayliga borib tushadi fayllar 
-      return ele.path;   
+    data.productImages = req.files?.map((ele) => {
+      return ele.path;
     });
 
     await productService.createNewProduct(data);
     res.send(
-      `<script> alert("Successfully creation!"); window.location.replace('admin/product/all') </script>`,
+        `<script> alert("Successfully creation!"); window.location.replace('/admin/product/all') </script>`,
     );
   } catch (err) {
     console.log("Error, createNewProduct", err);
-    
     const message =
-      // agar biz yaratgan Errors class dagi xatolik bolsa o'shani olib ber, : aks hold umumiy SMTH WENT WRONG xatoligini ber
-      err instanceof Errors ? err.message : Message.SOMETHING_WENT_WRONG;
-    
-      res.send(
-      `<script> alert("${message}"); window.location.replace('/admin/product/all') </script>`,
+        err instanceof Errors ? err.message : Message.SOMETHING_WENT_WRONG;
+    res.send(
+        `<script> alert("${message}"); window.location.replace('/admin/product/all') </script>`,
     );
   }
 };
@@ -73,8 +103,7 @@ productController.createNewProduct = async (
 productController.updateChosenProduct = async (req: Request, res: Response) => {
   try {
     console.log("updateChosenProduct");
-    const id = req.params.id as string;
-
+    const id = req.params.id;
     const result = await productService.updateChosenProduct(id, req.body);
 
     res.status(HttpCode.OK).json({ data: result });
