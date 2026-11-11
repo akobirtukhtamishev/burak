@@ -8,7 +8,7 @@ class ViewService {
     constructor() {
         this.viewModel = ViewModel;
     }
-
+    //   oldin korganmi yoqmi tekshiradigan mantiq
     public async checkViewExistence(input: ViewInput): Promise<View> {
         return await this.viewModel
             .findOne({

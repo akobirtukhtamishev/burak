@@ -55,8 +55,8 @@ class ProductService {
   /** *************************************************** */
 
   public async getProduct(
-      memberId: ObjectId | null,
-      id: string,
+      memberId: ObjectId | null, // nega ObjectID qildik typini. SSSSSSAAAAAAVVVVVOOOOLLLLL
+      id: string, // nega bunga string berdik
   ): Promise<Product> {
     const productId = shapeIntoMongooseObjectId(id);
 

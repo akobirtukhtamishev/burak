@@ -25,6 +25,8 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(morgan(MORGAN_FORMAT));
 
+// @ts-ignore
+// @ts-ignore
 /** 2-SESSIONS **/
 app.use(
     session({
